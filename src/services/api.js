@@ -32,6 +32,6 @@ export async function getMovieCredits(movieId) {
 
 export async function getMovieReviews(movieId) {
   const resp = await axios.get(`/movie/${movieId}/reviews?api_key=${API_KEY}`);
-  console.log(resp);
-  return resp;
+  //   console.log(resp.data.results);
+  return resp.data.results;
 }

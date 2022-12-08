@@ -1,0 +1,39 @@
+.title {
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.img {
+  max-width: 400px;
+}
+
+.inner {
+  max-width: 360px;
+  text-align: center;
+  display: inline-block;
+  padding: 15px 20px;
+  font-size: 24px;
+}

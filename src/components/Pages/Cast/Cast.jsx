@@ -1,3 +1,4 @@
+import Loader from 'components/Loader/Loader';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { getMovieCredits, IMAGE_URL } from 'services/api';
@@ -5,7 +6,7 @@ import { getMovieCredits, IMAGE_URL } from 'services/api';
 const Cast = ({ id }) => {
   const [cast, setCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(cast);
+  // console.log(cast);
 
   useEffect(() => {
     setIsLoading(true);
@@ -16,7 +17,9 @@ const Cast = ({ id }) => {
       });
   }, [id]);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <ul>
       {cast.map(el => {
         return (
