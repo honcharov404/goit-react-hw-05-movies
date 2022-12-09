@@ -2,6 +2,7 @@ import Loader from 'components/Loader/Loader';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { getMovieCredits, IMAGE_URL } from 'services/api';
+import PropTypes from 'prop-types';
 
 import s from './Cast.module.css';
 
@@ -38,6 +39,10 @@ const Cast = ({ id }) => {
       })}
     </ul>
   );
+};
+
+Cast.propTypes = {
+  id: PropTypes.number.isRequired,
 };
 
 export default Cast;
