@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { getMovieCredits, IMAGE_URL } from 'services/api';
 
+import s from './Cast.module.css';
+
 const Cast = ({ id }) => {
   const [cast, setCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,13 +22,17 @@ const Cast = ({ id }) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <ul>
+    <ul className={s.list}>
       {cast.map(el => {
         return (
-          <li key={el.id}>
-            <img src={IMAGE_URL + el.profile_path} alt="poster" />
-            <p>{el.name}</p>
-            <p>Character: {el.character}</p>
+          <li className={s.item} key={el.id}>
+            <img
+              className={s.img}
+              src={IMAGE_URL + el.profile_path}
+              alt="poster"
+            />
+            <p className={s.text}>{el.name}</p>
+            <p className={s.text}>Character: {el.character}</p>
           </li>
         );
       })}

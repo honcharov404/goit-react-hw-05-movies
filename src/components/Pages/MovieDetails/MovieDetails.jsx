@@ -1,18 +1,23 @@
 import Loader from 'components/Loader/Loader';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
+import { lazy } from 'react';
 import { useEffect } from 'react';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { getMovieInfo, IMAGE_URL } from 'services/api';
-import Cast from '../Cast/Cast';
-import { Reviews } from '../Reviews/Reviews';
 
 import s from './MovieDetails.module.css';
+
+const Cast = lazy(() => import('../Cast/Cast'));
+const Reviews = lazy(() => import('../Reviews/Reviews'));
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  // console.log(movie);
+  const location = useLocation();
+
+  const backLink = location.state?.from ?? '/movies';
+  // console.log(location);
 
   useEffect(() => {
     setIsLoading(true);
@@ -27,9 +32,11 @@ const MovieDetails = () => {
     <Loader />
   ) : (
     <div>
-      <button className={s.btn} type="button">
-        GO BACK
-      </button>
+      <Link to={backLink}>
+        <button className={s.btn} type="button">
+          GO BACK
+        </button>
+      </Link>
       <div className={s.wrap}>
         <img
           className={s.img}
@@ -38,7 +45,7 @@ const MovieDetails = () => {
         />
         <div className={s.wrapDetails}>
           <h2 className={s.title}>{movie.title}</h2>
-          <p className={s.text}>User Score: {movie.vote_average}%</p>
+          <p className={s.text}>User Score: {movie.vote_average}</p>
           <h3 className={s.subTitle}>Overview</h3>
           <p className={s.text}>{movie.overview}</p>
           <h3 className={s.subTitle}>Genres</h3>
@@ -53,20 +60,26 @@ const MovieDetails = () => {
           </ul>
         </div>
       </div>
-      <div>
+      <div className={s.wrapInfo}>
         <p className={s.text}>Additional information</p>
-        <ul>
-          <li>
-            <Link to={`/movies/${movieId}/cast`}>Cast</Link>
+        <ul className={s.infoList}>
+          <li className={s.infoItem}>
+            <Link state={{ from: backLink }} to={`cast`}>
+              Cast
+            </Link>
           </li>
-          <li>
-            <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+          <li className={s.infoItem}>
+            <Link state={{ from: backLink }} to={`reviews`}>
+              Reviews
+            </Link>
           </li>
         </ul>
-        <Routes>
-          <Route path="cast" element={<Cast id={movieId} />} />
-          <Route path="reviews" element={<Reviews id={movieId} />} />
-        </Routes>
+        <Suspense>
+          <Routes>
+            <Route path="cast" element={<Cast id={movieId} />} />
+            <Route path="reviews" element={<Reviews id={movieId} />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { getMovieReviews } from 'services/api';
 
-export const Reviews = ({ id }) => {
+const Reviews = ({ id }) => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   //   console.log(reviews);
@@ -19,7 +19,7 @@ export const Reviews = ({ id }) => {
 
   return isLoading ? (
     <Loader />
-  ) : (
+  ) : !!reviews.length ? (
     <ul>
       {reviews.map(review => {
         return (
@@ -30,5 +30,9 @@ export const Reviews = ({ id }) => {
         );
       })}
     </ul>
+  ) : (
+    <p>No reviews</p>
   );
 };
+
+export default Reviews;
