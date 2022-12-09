@@ -42,7 +42,7 @@ const Cast = ({ id }) => {
 };
 
 Cast.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Cast;
